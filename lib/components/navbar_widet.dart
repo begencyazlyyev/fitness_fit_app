@@ -37,8 +37,8 @@ class NavbarWidget extends StatelessWidget {
                         padding: const EdgeInsets.only(bottom: 4.0),
                         child: SvgPicture.asset(
                           "assets/svg/filled-dumbell.svg",
-                          width: 22,
-                          height: 22,
+                          width: 21,
+                          height: 21,
                         ),
                       )
                     : Padding(
@@ -46,8 +46,8 @@ class NavbarWidget extends StatelessWidget {
                         child: SvgPicture.asset(
                           "assets/svg/outlined-dumbell.svg",
                           color: Colors.grey,
-                          width: 22,
-                          height: 22,
+                          width: 21,
+                          height: 21,
                         ),
                       ),
                 label: "Training",

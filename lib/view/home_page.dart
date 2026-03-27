@@ -1,7 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/components/build_body_widget.dart';
+import 'package:flutter_application_1/view/pages/training_pages/exercises_view.dart';
 import 'package:flutter_application_1/components/navbar_widet.dart';
 import 'package:flutter_application_1/components/text_style_widget.dart';
 import 'package:flutter_application_1/data/notifiers.dart';
@@ -50,27 +50,22 @@ class _HomePageState extends State<HomePage>
                 icon: const Icon(Icons.menu, size: 30),
                 onPressed: () => _scaffoldKey.currentState?.openDrawer(),
               ),
-
               bottom: selectedPage == 0
                   ? TabBar(
                       indicatorColor: Color(0xFF4B5563),
                       labelColor: Color(0xFF4B5563),
                       dividerColor: Color(0xFFE5E7EB),
                       unselectedLabelColor: Color(0xFFCACACA),
-
                       tabs: [
                         Builder(
                           builder: (context) {
                             // Access the controller from DefaultTabController
                             final TabController controller =
                                 DefaultTabController.of(context);
-
                             return AnimatedBuilder(
                               animation: controller,
                               builder: (context, _) {
-                                // Check if this specific tab (index 0) is selected
                                 bool isSelected = controller.index == 0;
-
                                 return Tab(
                                   text: "Exercises",
                                   icon: SvgPicture.asset(
@@ -113,7 +108,7 @@ class _HomePageState extends State<HomePage>
                   : null,
             ),
             drawer: buildDrawer(), // Cleaned up for readability
-            body: buildBody(selectedPage),
+            body: exercisesView(selectedPage),
             bottomNavigationBar: const NavbarWidget(),
           ),
         );
