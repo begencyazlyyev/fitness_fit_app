@@ -1,7 +1,23 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/build_body_widget.dart';
+import 'package:flutter_application_1/components/navbar_widet.dart';
 import 'package:flutter_application_1/components/text_style_widget.dart';
+import 'package:flutter_application_1/data/notifiers.dart';
+import 'package:flutter_application_1/view/pages/training_pages/history_page.dart';
+import 'package:flutter_application_1/view/pages/training_pages/profile_page.dart';
+import 'package:flutter_application_1/view/pages/training_pages/programs_page.dart';
+import 'package:flutter_application_1/view/pages/training_pages/training_page.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+List<Widget> pages = [
+  TrainingPage(),
+  ProgramsPage(),
+  HistoryPage(),
+  ProfilePage(),
+];
+final List<String> pageTitles = ["Training", "Programs", "History", "Profile"];
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,94 +32,110 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          titleSpacing: 1,
-          title: Text("Training", style: KTextStyle.titleStyle),
-          leading: IconButton(
-            icon: const Icon(Icons.menu, size: 30),
-            onPressed: () {
-              _scaffoldKey.currentState?.openDrawer();
-            },
-          ),
-          bottom: const TabBar(
-            indicatorColor: Color(0xFF4B5563),
-            labelColor: Color(0xFF4B5563),
-            dividerColor: Color(0xFFE5E7EB),
-            unselectedLabelColor: Color(0xFFCACACA),
-            tabs: [
-              Tab(text: "Exercise", icon: Icon(Icons.person, size: 25)),
-              Tab(text: "Coaches", icon: Icon(Icons.person_outline)),
-            ],
-          ),
-        ),
-
-        drawer: SafeArea(
-          child: Drawer(
-            child: Column(
-              children: [
-                const DrawerHeader(
-                  decoration: BoxDecoration(color: Colors.blueGrey),
-                  child: Center(child: Text("Header")),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.home),
-                  title: const Text("Item 1"),
-                  onTap: () => Navigator.pop(context),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.settings),
-                  title: const Text("Item 2"),
-                  onTap: () => Navigator.pop(context),
-                ),
-              ],
-            ),
-          ),
-        ),
-
-        body: Column(
-          children: [
-            Expanded(
-              child: TabBarView(
-                children: [
-                  Center(child: Text("Tab 1 Content")),
-                  Center(child: Text("Tab 2 Content")),
-                ],
+    return ValueListenableBuilder(
+      valueListenable: selectedPageNotifier,
+      builder: (context, int selectedPage, child) {
+        return DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            key: _scaffoldKey,
+            appBar: AppBar(
+              titleSpacing: 1,
+              title: Text(
+                pageTitles[selectedPage],
+                style: KTextStyle.titleStyle,
               ),
+              leading: IconButton(
+                padding: EdgeInsets.zero,
+                icon: const Icon(Icons.menu, size: 30),
+                onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+              ),
+
+              bottom: selectedPage == 0
+                  ? TabBar(
+                      indicatorColor: Color(0xFF4B5563),
+                      labelColor: Color(0xFF4B5563),
+                      dividerColor: Color(0xFFE5E7EB),
+                      unselectedLabelColor: Color(0xFFCACACA),
+
+                      tabs: [
+                        Builder(
+                          builder: (context) {
+                            // Access the controller from DefaultTabController
+                            final TabController controller =
+                                DefaultTabController.of(context);
+
+                            return AnimatedBuilder(
+                              animation: controller,
+                              builder: (context, _) {
+                                // Check if this specific tab (index 0) is selected
+                                bool isSelected = controller.index == 0;
+
+                                return Tab(
+                                  text: "Exercises",
+                                  icon: SvgPicture.asset(
+                                    isSelected
+                                        ? "assets/svg/dumbell.svg" // Your filled version
+                                        : "assets/svg/dumbell-outlined.svg", // Your outline version
+                                    width: 30,
+                                    height: 30,
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                        Builder(
+                          builder: (context) {
+                            final TabController controller =
+                                DefaultTabController.of(context);
+
+                            return AnimatedBuilder(
+                              animation: controller,
+                              builder: (context, _) {
+                                bool isSelected = controller.index == 1;
+                                return Tab(
+                                  text: "Coaches",
+                                  icon: SvgPicture.asset(
+                                    isSelected
+                                        ? "assets/svg/coach-filled.svg"
+                                        : "assets/svg/coach-outlined.svg",
+                                    width: 30,
+                                    height: 30,
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    )
+                  : null,
+            ),
+            drawer: buildDrawer(), // Cleaned up for readability
+            body: buildBody(selectedPage),
+            bottomNavigationBar: const NavbarWidget(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget buildDrawer() {
+    return SafeArea(
+      child: Drawer(
+        child: Column(
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(color: Colors.blueGrey),
+              child: Center(child: Text("Header")),
+            ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text("Item 1"),
+              onTap: () => Navigator.of(context).pop(),
             ),
           ],
-        ),
-        bottomNavigationBar: Container(
-          height: 90,
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(color: Colors.black26, blurRadius: 4, spreadRadius: 1),
-            ],
-          ),
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: "Training",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.search),
-                label: "Programs",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: "History",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: "Profile",
-              ),
-            ],
-          ),
         ),
       ),
     );
