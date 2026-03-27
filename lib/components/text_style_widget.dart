@@ -12,4 +12,10 @@ class KTextStyle {
     color: Color(0xFF111928),
     fontWeight: FontWeight.w500,
   );
+
+  static const TextStyle titleStyle = TextStyle(
+    fontSize: 24,
+    color: Color(0xFF111928),
+    fontWeight: FontWeight.w500,
+  );
 }

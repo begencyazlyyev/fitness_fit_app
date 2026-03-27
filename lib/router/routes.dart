@@ -1,3 +1,3 @@
-import 'package:flutter_application_1/view/pages/onboarding_pages/create_accaunt.dart';
+import 'package:flutter_application_1/view/home_page.dart';
 
-final routes = {'/': (context) => const CreateAccaunt()};
+final routes = {'/': (context) => const HomePage()};
