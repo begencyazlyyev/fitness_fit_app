@@ -18,4 +18,9 @@ class KTextStyle {
     color: Color(0xFF111928),
     fontWeight: FontWeight.w500,
   );
+
+  static const TextStyle drawerText = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+  );
 }

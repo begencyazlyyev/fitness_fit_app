@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      onGenerateRoute: generateRoute,
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: Color(0xFF1C2A3A),
@@ -33,7 +34,6 @@ class MyApp extends StatelessWidget {
           style: FilledButton.styleFrom(backgroundColor: Color(0xFF1C2A3A)),
         ),
       ),
-      routes: routes,
     );
   }
 }

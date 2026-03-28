@@ -12,8 +12,7 @@ class AddExercisePage extends StatefulWidget {
 class _AddExercisePageState extends State<AddExercisePage> {
   int selectedIndex = 0;
 
-  // Helper list to make the code cleaner
-  final List<String> images = [
+  final List<String> categoryImages = [
     "assets/svg/chest_b.svg",
     "assets/svg/back_b.svg",
     "assets/svg/biceps_b.svg",
@@ -29,8 +28,49 @@ class _AddExercisePageState extends State<AddExercisePage> {
     "assets/svg/calves_b.svg",
   ];
 
+  final List<String> categories = [
+    "Chest",
+    "Back",
+    "Biceps",
+    "Triceps",
+    "Shoulder",
+    "Waist",
+    "Neck",
+    "Upper Arm",
+    "Forearm",
+    "Quadriceps",
+    "Hamstrings",
+    "Hips",
+    "Calves",
+  ];
+
+  //* Temporary images
+
+  final List<String> exerciseImages = [
+    "assets/images/bench-press.jpg",
+    "assets/images/lever-seated-fly.jpg",
+    "assets/images/incline-bench-press.jpg",
+  ];
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final String? categoryArgument =
+        ModalRoute.of(context)?.settings.arguments as String?;
+
+    if (categoryArgument != null) {
+      int index = categories.indexOf(categoryArgument);
+      if (index != -1) {
+        selectedIndex = index;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    // final String categoryTitle =
+    //     ModalRoute.of(context)?.settings.arguments as String? ?? "Unknown";
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
@@ -51,10 +91,9 @@ class _AddExercisePageState extends State<AddExercisePage> {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: List.generate(images.length, (index) {
+                children: List.generate(categoryImages.length, (index) {
                   return GestureDetector(
                     onTap: () {
-                      // 2. Update the state and trigger a rebuild
                       setState(() {
                         selectedIndex = index;
                       });
@@ -70,7 +109,7 @@ class _AddExercisePageState extends State<AddExercisePage> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: SvgPicture.asset(
-                        images[index],
+                        categoryImages[index],
                         width: 56,
                         height: 56,
                         fit: BoxFit.cover,
@@ -85,7 +124,7 @@ class _AddExercisePageState extends State<AddExercisePage> {
           Padding(
             padding: const EdgeInsets.only(left: 15.0, top: 4.0, bottom: 4.0),
             child: Text(
-              "Chest Exersices",
+              "${categories[selectedIndex]} Exersices",
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
@@ -104,6 +143,7 @@ class _AddExercisePageState extends State<AddExercisePage> {
               ),
               itemCount: 10,
               itemBuilder: (context, index) {
+                //* Outer main container
                 return Container(
                   decoration: BoxDecoration(
                     color: Color(0xFFE9ECF3),
@@ -120,17 +160,44 @@ class _AddExercisePageState extends State<AddExercisePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
+                      //* inside image container
+                      Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                              ),
+                            ),
+                            width: 195,
+                            height: 184,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                              ),
+                              child: Image.asset(
+                                exerciseImages[index % exerciseImages.length],
+                                width: 195,
+                                height: 184,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                          color: Colors.white, // inside container
-                        ),
-                        width: 195,
-                        height: 184,
+                          // The Bookmark Icon
+                          Positioned(
+                            top: 8,
+                            left: 8,
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: Icon(Icons.bookmark_outline, size: 28),
+                            ),
+                          ),
+                        ],
                       ),
+
+                      //* second content text
                       ListTile(
                         contentPadding: EdgeInsets.only(left: 8),
                         visualDensity: VisualDensity(vertical: -2),
@@ -141,7 +208,7 @@ class _AddExercisePageState extends State<AddExercisePage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        subtitle: Text("Chest"),
+                        subtitle: Text(categories[selectedIndex]),
                       ),
                     ],
                   ),

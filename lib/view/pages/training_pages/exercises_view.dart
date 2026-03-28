@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/view/home_page.dart';
-import 'package:flutter_application_1/view/pages/training_pages/add_exercise_page.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 
-final List<String> images = [
+final List<String> categoryImages = [
   "assets/svg/chest.svg",
   "assets/svg/back.svg",
   "assets/svg/biceps.svg",
@@ -20,7 +19,7 @@ final List<String> images = [
   "assets/svg/calves.svg",
 ];
 
-final List<String> titles = [
+final List<String> categories = [
   "Chest",
   "Back",
   "Biceps",
@@ -48,42 +47,29 @@ Widget exercisesView(int selectedPage) {
             childAspectRatio: 0.72,
             crossAxisCount: 3,
           ),
-          itemCount: images.length,
+          itemCount: categoryImages.length,
           itemBuilder: (context, index) {
             return SizedBox(
               width: 50,
               height: 50,
               child: InkWell(
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pushNamed(
                     context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) =>
-                          const AddExercisePage(),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                            // Define the starting point (bottom) and ending point (center)
-                            const begin = Offset(0.0, 1.0);
-                            const end = Offset.zero;
-                            const curve = Curves.easeOut;
-                            var tween = Tween(
-                              begin: begin,
-                              end: end,
-                            ).chain(CurveTween(curve: curve));
-                            return SlideTransition(
-                              position: animation.drive(tween),
-                              child: child,
-                            );
-                          },
-                    ),
+                    '/add_exercise',
+                    arguments: categories[index],
                   );
                 },
                 child: Column(
                   children: <Widget>[
-                    SvgPicture.asset(images[index], width: 130, height: 130),
+                    SvgPicture.asset(
+                      categoryImages[index],
+                      width: 130,
+                      height: 130,
+                    ),
                     Gap(6),
                     Text(
-                      titles[index],
+                      categories[index],
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,

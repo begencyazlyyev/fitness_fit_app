@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/drawer_widget.dart';
 import 'package:flutter_application_1/view/pages/training_pages/exercises_view.dart';
 import 'package:flutter_application_1/components/navbar_widet.dart';
 import 'package:flutter_application_1/components/text_style_widget.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_application_1/view/pages/training_pages/profile_page.dar
 import 'package:flutter_application_1/view/pages/training_pages/programs_page.dart';
 import 'package:flutter_application_1/view/pages/training_pages/training_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gap/gap.dart';
 
 List<Widget> pages = [
   TrainingPage(),
@@ -107,32 +109,12 @@ class _HomePageState extends State<HomePage>
                     )
                   : null,
             ),
-            drawer: buildDrawer(), // Cleaned up for readability
+            drawer: buildDrawer(context), // Cleaned up for readability
             body: exercisesView(selectedPage),
             bottomNavigationBar: const NavbarWidget(),
           ),
         );
       },
-    );
-  }
-
-  Widget buildDrawer() {
-    return SafeArea(
-      child: Drawer(
-        child: Column(
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blueGrey),
-              child: Center(child: Text("Header")),
-            ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text("Item 1"),
-              onTap: () => Navigator.of(context).pop(),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
