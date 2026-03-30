@@ -174,6 +174,59 @@ Widget buildDrawer(BuildContext context) {
                         Navigator.pop(context);
                       },
                     ),
+
+                    //* Bookmark
+                    ListTile(
+                      leading: selectedPage == 4
+                          ? const Icon(
+                              Icons.bookmark,
+                              size: 32,
+                              color: Color(0xFF4B5563),
+                            )
+                          : const Icon(
+                              Icons.bookmark_outline,
+                              size: 32,
+                              color: Colors.grey,
+                            ),
+                      title: Text(
+                        "Bookmarks",
+                        style: KTextStyle.drawerText.copyWith(
+                          color: selectedPage == 4
+                              ? const Color(0xFF4B5563)
+                              : Colors.grey,
+                        ),
+                      ),
+                      onTap: () {
+                        selectedPageNotifier.value = 4; //TODO page 4
+                        Navigator.pop(context);
+                      },
+                    ),
+                    //* Settings
+                    ListTile(
+                      leading: selectedPage == 5
+                          ? const Icon(
+                              Icons.settings,
+                              size: 32,
+                              color: Color(0xFF4B5563),
+                            )
+                          : const Icon(
+                              Icons.settings_outlined,
+                              size: 32,
+                              color: Colors.grey,
+                            ),
+                      title: Text(
+                        "Settings",
+                        style: KTextStyle.drawerText.copyWith(
+                          color: selectedPage == 5
+                              ? const Color(0xFF4B5563)
+                              : Colors.grey,
+                        ),
+                      ),
+                      onTap: () {
+                        selectedPageNotifier.value = 5; //TODO page 5
+                        Navigator.pop(context);
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -197,7 +250,7 @@ Widget buildDrawer(BuildContext context) {
                   // Add logout logic here
                 },
               ),
-              Gap(300),
+              Gap(200),
             ],
           );
         },

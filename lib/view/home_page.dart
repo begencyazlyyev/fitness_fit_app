@@ -2,16 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/drawer_widget.dart';
-import 'package:flutter_application_1/view/pages/training_pages/exercises_view.dart';
+import 'package:flutter_application_1/view/pages/training_page/exercises_view.dart';
 import 'package:flutter_application_1/components/navbar_widet.dart';
 import 'package:flutter_application_1/components/text_style_widget.dart';
 import 'package:flutter_application_1/data/notifiers.dart';
-import 'package:flutter_application_1/view/pages/training_pages/history_page.dart';
-import 'package:flutter_application_1/view/pages/training_pages/profile_page.dart';
-import 'package:flutter_application_1/view/pages/training_pages/programs_page.dart';
-import 'package:flutter_application_1/view/pages/training_pages/training_page.dart';
+import 'package:flutter_application_1/view/pages/training_page/history_page.dart';
+import 'package:flutter_application_1/view/pages/training_page/profile_page.dart';
+import 'package:flutter_application_1/view/pages/training_page/programs_page.dart';
+import 'package:flutter_application_1/view/pages/training_page/training_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gap/gap.dart';
 
 List<Widget> pages = [
   TrainingPage(),

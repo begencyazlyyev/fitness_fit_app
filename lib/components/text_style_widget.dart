@@ -23,4 +23,9 @@ class KTextStyle {
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );
+
+  static const TextStyle solidText = TextStyle(
+    fontSize: 16,
+    color: Color(0xFF6B7280),
+  );
 }

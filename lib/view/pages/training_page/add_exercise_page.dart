@@ -44,7 +44,7 @@ class _AddExercisePageState extends State<AddExercisePage> {
     "Calves",
   ];
 
-  //* Temporary images
+  //* Temporary files
 
   final List<String> exerciseImages = [
     "assets/images/bench-press.jpg",
@@ -52,17 +52,23 @@ class _AddExercisePageState extends State<AddExercisePage> {
     "assets/images/incline-bench-press.jpg",
   ];
 
+  final List<String> exerciseTitles = [
+    "Bench Press",
+    "Lever Seated Fly",
+    "Incline Bench Press",
+  ];
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    final String? categoryArgument =
-        ModalRoute.of(context)?.settings.arguments as String?;
-
-    if (categoryArgument != null) {
-      int index = categories.indexOf(categoryArgument);
+    final args = ModalRoute.of(context)?.settings.arguments;
+    if (args is String) {
+      int index = categories.indexOf(args);
       if (index != -1) {
-        selectedIndex = index;
+        setState(() {
+          selectedIndex = index;
+        });
       }
     }
   }
@@ -144,73 +150,86 @@ class _AddExercisePageState extends State<AddExercisePage> {
               itemCount: 10,
               itemBuilder: (context, index) {
                 //* Outer main container
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xFFE9ECF3),
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 2,
-                        color: Colors.grey.shade400,
-                        spreadRadius: 2,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      //* inside image container
-                      Stack(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              ),
-                            ),
-                            width: 195,
-                            height: 184,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              ),
-                              child: Image.asset(
-                                exerciseImages[index % exerciseImages.length],
-                                width: 195,
-                                height: 184,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          // The Bookmark Icon
-                          Positioned(
-                            top: 8,
-                            left: 8,
-                            child: GestureDetector(
-                              onTap: () {},
-                              child: Icon(Icons.bookmark_outline, size: 28),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      //* second content text
-                      ListTile(
-                        contentPadding: EdgeInsets.only(left: 8),
-                        visualDensity: VisualDensity(vertical: -2),
-                        title: Text(
-                          "Bench Press",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                return InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/exercise_details',
+                      arguments: {
+                        "title": exerciseTitles[index % exerciseTitles.length],
+                        "subtitle": categories[index],
+                        "image": exerciseImages[index % exerciseImages.length],
+                      }, //! Argumets passed here
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xFFE9ECF3),
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 2,
+                          color: Colors.grey.shade400,
+                          spreadRadius: 2,
+                          offset: Offset(0, 2),
                         ),
-                        subtitle: Text(categories[selectedIndex]),
-                      ),
-                    ],
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        //* inside image container
+                        Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                ),
+                              ),
+                              width: 195,
+                              height: 184,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                ),
+                                child: Image.asset(
+                                  exerciseImages[index % exerciseImages.length],
+                                  width: 195,
+                                  height: 184,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            // The Bookmark Icon
+                            Positioned(
+                              top: 8,
+                              left: 8,
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: Icon(Icons.bookmark_outline, size: 28),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        //* second content text
+                        ListTile(
+                          contentPadding: EdgeInsets.only(left: 8),
+                          visualDensity: VisualDensity(vertical: -2),
+                          title: Text(
+                            exerciseTitles[index % exerciseTitles.length],
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(categories[selectedIndex]),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
