@@ -1,7 +1,11 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/button_widget.dart';
+import 'package:flutter_application_1/components/selection_widget.dart';
 import 'package:flutter_application_1/components/text_style_widget.dart';
+import 'package:flutter_application_1/components/textbutton_widget.dart';
+import 'package:flutter_application_1/data/notifiers.dart';
 import 'package:gap/gap.dart';
 
 class ProgramSelectionPage extends StatefulWidget {
@@ -11,7 +15,7 @@ class ProgramSelectionPage extends StatefulWidget {
   State<ProgramSelectionPage> createState() => _ProgramSelectionPageState();
 }
 
-final double spaceGap = 30;
+final double spaceGap = 40;
 
 class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
   @override
@@ -38,11 +42,13 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          // Main image
           SizedBox(
             width: double.infinity,
-            height: 300,
+            height: 310,
             child: Image.asset(image),
           ),
+          Gap(10),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -66,69 +72,67 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
                 ),
                 Gap(spaceGap),
                 //* When lifting
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment
-                      .center, // Aligns "When lifting" with the right side
-                  children: [
-                    Text(
-                      "When lifting",
-                      style: KTextStyle.titleStyle.copyWith(fontSize: 18),
-                    ),
-                    // Specifics
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 60,
-                          height: 40,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFEEEEEE),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Text(
-                            "25",
-                            style: KTextStyle.titleStyle.copyWith(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        const Gap(15),
-                        Text(
-                          "kg",
-                          style: KTextStyle.fitStyle.copyWith(fontSize: 16),
-                        ),
-                        const Gap(5),
-                        SizedBox(
-                          height: 40,
-                          width: 40,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Positioned(
-                                top: -10, // pull up slightly
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: Icon(Icons.arrow_drop_up, size: 40),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: -10, // pull down slightly
-                                child: Icon(Icons.arrow_drop_down, size: 40),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                SelectionWidget(
+                  workout: "When lifting",
+                  weight: 25,
+                  type: "  kg  ",
+                ),
+                Gap(spaceGap),
+
+                // Till I can do
+                SelectionWidget(
+                  workout: "Till tired, I can do",
+                  weight: 10,
+                  type: "Reps",
+                ),
+                Gap(spaceGap),
+
+                // Quantity of sets
+                SelectionWidget(
+                  workout: "For each exercise",
+                  weight: 4,
+                  type: "Sets",
                 ),
               ],
             ),
           ),
+          Gap(10),
 
+          // Button
+          Stack(
+            children: [
+              ButtonWidget(label: "Add to Programs", onPressed: () {}),
+              Positioned(
+                top: 30,
+                right: 85,
+                child: CircleAvatar(
+                  radius: 14,
+                  backgroundColor: Colors.white,
+                  child: Center(
+                    child: Text(
+                      "5",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          ValueListenableBuilder(
+            valueListenable: selectedPageNotifier,
+            builder: (context, int selectedPage, child) {
+              return textbuttonWidget(() {
+                selectedPageNotifier.value = 1;
+
+                Navigator.of(context).popUntil((route) => route.isFirst);
+              }, "Go to Programs >");
+            },
+          ),
           // Image Video buttons
         ],
       ),

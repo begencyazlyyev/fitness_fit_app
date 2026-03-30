@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/view/home_page.dart';
+import 'package:flutter_application_1/view/pages/programs_page/programs_page.dart';
 import 'package:flutter_application_1/view/pages/training_page/add_exercise_page.dart';
 import 'package:flutter_application_1/view/pages/training_page/exercise_details.dart';
 import 'package:flutter_application_1/view/pages/training_page/selectprogram_page.dart';
@@ -8,7 +9,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case '/':
       return MaterialPageRoute(builder: (_) => const HomePage());
-    //* Next page
+    //* Add Exercise page - Animated
 
     case '/add_exercise':
       return PageRouteBuilder(
@@ -31,16 +32,26 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           );
         },
       );
-    //* Next page
+
+    //* Exercise details page
     case '/exercise_details':
       return MaterialPageRoute(
         settings: settings,
         builder: (_) => const ExerciseDetails(),
       );
+
+    //* Program Selection page
     case '/select_program':
       return MaterialPageRoute(
         settings: settings,
         builder: (_) => const ProgramSelectionPage(),
+      );
+
+    //* Programs page
+    case '/programs_page':
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const ProgramsPage(),
       );
     default:
       return MaterialPageRoute(

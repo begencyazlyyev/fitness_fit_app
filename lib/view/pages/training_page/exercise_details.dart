@@ -48,7 +48,7 @@ class _ExerciseDetailsState extends State<ExerciseDetails> {
           children: <Widget>[
             SizedBox(
               width: double.infinity,
-              height: 300,
+              height: 310,
               child: isVideo
                   ? const Center(
                       child: Text("Video Player Placeholder"),
