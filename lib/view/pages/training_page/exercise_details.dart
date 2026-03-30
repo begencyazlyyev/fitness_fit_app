@@ -24,7 +24,7 @@ class _ExerciseDetailsState extends State<ExerciseDetails> {
         ? args["title"]
         : "Exercise";
 
-    final String subtitle = args is Map && args["subtitle"] != null
+    final String category = args is Map && args["subtitle"] != null
         ? args["subtitle"]
         : "Not Found";
 
@@ -124,7 +124,7 @@ class _ExerciseDetailsState extends State<ExerciseDetails> {
                     children: <Widget>[
                       Text("BODY PARTS", style: KTextStyle.solidText),
                       Gap(100),
-                      Text(subtitle, style: KTextStyle.solidText),
+                      Text(category, style: KTextStyle.solidText),
                     ],
                   ),
                   Row(
@@ -166,7 +166,16 @@ class _ExerciseDetailsState extends State<ExerciseDetails> {
               ),
             ),
 
-            ButtonWidget(label: "Select Programs", onPressed: () {}),
+            ButtonWidget(
+              label: "Select Programs",
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/select_program',
+                  arguments: {"image": image, "category": category},
+                );
+              },
+            ),
             Gap(20),
           ],
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/view/home_page.dart';
 import 'package:flutter_application_1/view/pages/training_page/add_exercise_page.dart';
 import 'package:flutter_application_1/view/pages/training_page/exercise_details.dart';
+import 'package:flutter_application_1/view/pages/training_page/selectprogram_page.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -35,6 +36,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         settings: settings,
         builder: (_) => const ExerciseDetails(),
+      );
+    case '/select_program':
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const ProgramSelectionPage(),
       );
     default:
       return MaterialPageRoute(
