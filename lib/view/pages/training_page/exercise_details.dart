@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/button_widget.dart';
 import 'package:flutter_application_1/components/mediabuttont_widget.dart';
@@ -164,7 +166,6 @@ class _ExerciseDetailsState extends State<ExerciseDetails> {
               ),
             ),
 
-            //TODO add button
             ButtonWidget(label: "Select Programs", onPressed: () {}),
             Gap(20),
           ],

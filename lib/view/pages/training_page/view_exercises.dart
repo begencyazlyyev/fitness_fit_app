@@ -35,7 +35,7 @@ final List<String> categories = [
   "Calves",
 ];
 
-Widget exercisesView(int selectedPage) {
+Widget viewExercises(int selectedPage) {
   if (selectedPage == 0) {
     return TabBarView(
       children: [

@@ -12,6 +12,9 @@ class NavbarWidget extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: selectedPageNotifier,
       builder: (context, int selectedPage, child) {
+        if (selectedPage >= 4) {
+          return const SizedBox.shrink();
+        }
         return Container(
           height: 96,
           decoration: BoxDecoration(

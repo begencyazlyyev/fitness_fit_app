@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/text_style_widget.dart';
+import 'package:flutter_application_1/cubit/bookmark_cubit.dart';
+import 'package:flutter_application_1/models/bookmark_state.dart';
+import 'package:flutter_application_1/models/exercise_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AddExercisePage extends StatefulWidget {
@@ -149,88 +153,113 @@ class _AddExercisePageState extends State<AddExercisePage> {
               ),
               itemCount: 10,
               itemBuilder: (context, index) {
+                final currentExercise = Exercise(
+                  title: exerciseTitles[index % exerciseTitles.length],
+                  category: categories[selectedIndex],
+                  image: exerciseImages[index % exerciseImages.length],
+                );
                 //* Outer main container
-                return InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      '/exercise_details',
-                      arguments: {
-                        "title": exerciseTitles[index % exerciseTitles.length],
-                        "subtitle": categories[index],
-                        "image": exerciseImages[index % exerciseImages.length],
-                      }, //! Argumets passed here
+                return BlocBuilder<BookmarkCubit, BookmarkState>(
+                  builder: (context, state) {
+                    final isBookmarked = state.bookmarkedExercises.contains(
+                      currentExercise,
                     );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFFE9ECF3),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 2,
-                          color: Colors.grey.shade400,
-                          spreadRadius: 2,
-                          offset: Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        //* inside image container
-                        Stack(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
-                                ),
-                              ),
-                              width: 195,
-                              height: 184,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
-                                ),
-                                child: Image.asset(
-                                  exerciseImages[index % exerciseImages.length],
-                                  width: 195,
-                                  height: 184,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            // The Bookmark Icon
-                            Positioned(
-                              top: 8,
-                              left: 8,
-                              child: GestureDetector(
-                                onTap: () {},
-                                child: Icon(Icons.bookmark_outline, size: 28),
-                              ),
+                    return InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/exercise_details',
+                          arguments: {
+                            "title": currentExercise.title,
+                            "subtitle": currentExercise.category,
+                            "image": currentExercise.image,
+                          }, //! Argumets passed here
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xFFE9ECF3),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 2,
+                              color: Colors.grey.shade400,
+                              spreadRadius: 2,
+                              offset: Offset(0, 2),
                             ),
                           ],
                         ),
-
-                        //* second content text
-                        ListTile(
-                          contentPadding: EdgeInsets.only(left: 8),
-                          visualDensity: VisualDensity(vertical: -2),
-                          title: Text(
-                            exerciseTitles[index % exerciseTitles.length],
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            //* inside image container
+                            Stack(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10),
+                                    ),
+                                  ),
+                                  width: 195,
+                                  height: 184,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10),
+                                    ),
+                                    child: Image.asset(
+                                      exerciseImages[index %
+                                          exerciseImages.length],
+                                      width: 195,
+                                      height: 184,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                // The Bookmark Icon
+                                Positioned(
+                                  top: 8,
+                                  left: 8,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      context
+                                          .read<BookmarkCubit>()
+                                          .toggleBookmark(currentExercise);
+                                    },
+                                    child: Icon(
+                                      isBookmarked
+                                          ? Icons.bookmark
+                                          : Icons.bookmark_outline,
+                                      size: 28,
+                                      color: isBookmarked
+                                          ? Colors.black
+                                          : Colors.black54,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          subtitle: Text(categories[selectedIndex]),
+
+                            //* second content text
+                            ListTile(
+                              contentPadding: EdgeInsets.only(left: 8),
+                              visualDensity: VisualDensity(vertical: -2),
+                              title: Text(
+                                exerciseTitles[index % exerciseTitles.length],
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Text(categories[selectedIndex]),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 );
               },
             ),

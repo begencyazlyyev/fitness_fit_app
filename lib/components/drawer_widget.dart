@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/text_style_widget.dart';
 import 'package:flutter_application_1/data/notifiers.dart';
@@ -197,7 +199,7 @@ Widget buildDrawer(BuildContext context) {
                         ),
                       ),
                       onTap: () {
-                        selectedPageNotifier.value = 4; //TODO page 4
+                        selectedPageNotifier.value = 4;
                         Navigator.pop(context);
                       },
                     ),
@@ -223,7 +225,7 @@ Widget buildDrawer(BuildContext context) {
                         ),
                       ),
                       onTap: () {
-                        selectedPageNotifier.value = 5; //TODO page 5
+                        selectedPageNotifier.value = 5;
                         Navigator.pop(context);
                       },
                     ),

@@ -2,13 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/drawer_widget.dart';
-import 'package:flutter_application_1/view/pages/training_page/exercises_view.dart';
+import 'package:flutter_application_1/view/pages/bookmark_page/bookmark_page.dart';
+import 'package:flutter_application_1/view/pages/settings_page/settings_page.dart';
+import 'package:flutter_application_1/view/pages/training_page/view_exercises.dart';
 import 'package:flutter_application_1/components/navbar_widet.dart';
 import 'package:flutter_application_1/components/text_style_widget.dart';
 import 'package:flutter_application_1/data/notifiers.dart';
-import 'package:flutter_application_1/view/pages/training_page/history_page.dart';
-import 'package:flutter_application_1/view/pages/training_page/profile_page.dart';
-import 'package:flutter_application_1/view/pages/training_page/programs_page.dart';
+import 'package:flutter_application_1/view/pages/history_page/history_page.dart';
+import 'package:flutter_application_1/view/pages/profile_page/profile_page.dart';
+import 'package:flutter_application_1/view/pages/programs_page/programs_page.dart';
 import 'package:flutter_application_1/view/pages/training_page/training_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -17,8 +19,17 @@ List<Widget> pages = [
   ProgramsPage(),
   HistoryPage(),
   ProfilePage(),
+  BookmarksPage(),
+  SettingsPage(),
 ];
-final List<String> pageTitles = ["Training", "Programs", "History", "Profile"];
+final List<String> pageTitles = [
+  "Training",
+  "Programs",
+  "History",
+  "Profile",
+  "Bookmarks",
+  "Settings",
+];
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -109,7 +120,7 @@ class _HomePageState extends State<HomePage>
                   : null,
             ),
             drawer: buildDrawer(context), // Cleaned up for readability
-            body: exercisesView(selectedPage),
+            body: viewExercises(selectedPage),
             bottomNavigationBar: const NavbarWidget(),
           ),
         );
