@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage>
           child: Scaffold(
             key: _scaffoldKey,
             appBar: AppBar(
+              surfaceTintColor: Colors.transparent,
               titleSpacing: 1,
               title: Text(
                 pageTitles[selectedPage],

@@ -5,19 +5,19 @@ import 'package:flutter_application_1/components/button_widget.dart';
 import 'package:flutter_application_1/components/selection_widget.dart';
 import 'package:flutter_application_1/components/text_style_widget.dart';
 import 'package:flutter_application_1/components/textbutton_widget.dart';
+import 'package:flutter_application_1/cubit/kg_counter_cubit.dart';
+import 'package:flutter_application_1/cubit/programs_cubit.dart';
+import 'package:flutter_application_1/cubit/reps_counter_cubit.dart';
 import 'package:flutter_application_1/data/notifiers.dart';
+import 'package:flutter_application_1/models/programs_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-class ProgramSelectionPage extends StatefulWidget {
+const double spaceGap = 40;
+
+class ProgramSelectionPage extends StatelessWidget {
   const ProgramSelectionPage({super.key});
 
-  @override
-  State<ProgramSelectionPage> createState() => _ProgramSelectionPageState();
-}
-
-final double spaceGap = 40;
-
-class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)?.settings.arguments;
@@ -26,115 +26,156 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
         ? args["category"]
         : "Not Found";
 
-    // 2. Provide a fallback or handle null for the asset path
     final String image = (args is Map && args["image"] != null)
         ? args["image"]
         : "assets/placeholder.png";
 
-    return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        shadowColor: Colors.grey.withOpacity(0.6),
-        scrolledUnderElevation: 1.5,
-        centerTitle: true,
-        title: Text("Program selection", style: KTextStyle.titleStyle),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          // Main image
-          SizedBox(
-            width: double.infinity,
-            height: 310,
-            child: Image.asset(image),
-          ),
-          Gap(10),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                //* Workout type
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Workout type",
-                      style: KTextStyle.titleStyle.copyWith(fontSize: 18),
-                    ),
-                    Text(
-                      category,
-                      style: KTextStyle.titleStyle.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                Gap(spaceGap),
-                //* When lifting
-                SelectionWidget(
-                  workout: "When lifting",
-                  weight: 25,
-                  type: "  kg  ",
-                ),
-                Gap(spaceGap),
+    final String title = args is Map && args["title"] != null
+        ? args["title"]
+        : "Unknown";
 
-                // Till I can do
-                SelectionWidget(
-                  workout: "Till tired, I can do",
-                  weight: 10,
-                  type: "Reps",
-                ),
-                Gap(spaceGap),
-
-                // Quantity of sets
-                SelectionWidget(
-                  workout: "For each exercise",
-                  weight: 4,
-                  type: "Sets",
-                ),
-              ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => KgCounterCubit()),
+        BlocProvider(create: (_) => RepsConterCubit()),
+      ],
+      child: Scaffold(
+        appBar: AppBar(
+          surfaceTintColor: Colors.transparent,
+          shadowColor: Colors.grey.withOpacity(0.6),
+          scrolledUnderElevation: 1.5,
+          centerTitle: true,
+          title: Text("Program selection", style: KTextStyle.titleStyle),
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              width: double.infinity,
+              height: 310,
+              child: Image.asset(image),
             ),
-          ),
-          Gap(10),
-
-          // Button
-          Stack(
-            children: [
-              ButtonWidget(label: "Add to Programs", onPressed: () {}),
-              Positioned(
-                top: 30,
-                right: 85,
-                child: CircleAvatar(
-                  radius: 14,
-                  backgroundColor: Colors.white,
-                  child: Center(
-                    child: Text(
-                      "5",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+            Gap(10),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Builder(
+                builder: (context) {
+                  final counterKg = context.watch<KgCounterCubit>().state;
+                  final counterReps = context.watch<RepsConterCubit>().state;
+                  return Column(
+                    children: [
+                      //* Workout type
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Workout type",
+                            style: KTextStyle.titleStyle.copyWith(fontSize: 18),
+                          ),
+                          Text(
+                            category,
+                            style: KTextStyle.titleStyle.copyWith(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ),
-                ),
+                      Gap(spaceGap),
+                      //* When lifting
+                      SelectionWidget(
+                        workout: "When lifting",
+                        weight: counterKg,
+                        type: "  kg  ",
+                        arrowUp: () =>
+                            context.read<KgCounterCubit>().increment(),
+                        arrowDown: () =>
+                            context.read<KgCounterCubit>().decrement(),
+                      ),
+                      Gap(spaceGap),
+                      // Till I can do
+                      SelectionWidget(
+                        workout: "Till tired, I can do",
+                        weight: counterReps,
+                        type: "Reps",
+                        arrowUp: () =>
+                            context.read<RepsConterCubit>().increment(),
+                        arrowDown: () =>
+                            context.read<RepsConterCubit>().decrement(),
+                      ),
+                      Gap(spaceGap),
+                      // Quantity of sets
+                      SelectionWidget(
+                        workout: "For each exercise",
+                        weight: 4,
+                        type: "Sets",
+                        arrowUp: () {},
+                        arrowDown: () {},
+                      ),
+                      Gap(10),
+
+                      Stack(
+                        children: [
+                          ButtonWidget(
+                            label: "Add to Programs",
+                            onPressed: () {
+                              final exercise = ProgramExercise(
+                                title: title,
+                                category: category,
+                                image: image,
+                                kg: counterKg,
+                                reps: counterReps,
+                                sets: 4,
+                              );
+
+                              final today =
+                                  DateTime.now().weekday -
+                                  1; // Monday=0, Sunday=6
+                              context.read<ProgramsCubit>().addExercise(
+                                today,
+                                exercise,
+                              );
+                            },
+                          ),
+                          Positioned(
+                            top: 30,
+                            right: 70,
+                            child: CircleAvatar(
+                              radius: 14,
+                              backgroundColor: Colors.white,
+                              child: Center(
+                                child: Text(
+                                  "${context.watch<ProgramsCubit>().state.values.fold(0, (sum, list) => sum + list.length)}",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      ValueListenableBuilder(
+                        valueListenable: selectedPageNotifier,
+                        builder: (context, int selectedPage, child) {
+                          return textbuttonWidget(() {
+                            selectedPageNotifier.value = 1;
+                            Navigator.of(
+                              context,
+                            ).popUntil((route) => route.isFirst);
+                          }, "Go to Programs >");
+                        },
+                      ),
+                    ],
+                  );
+                },
               ),
-            ],
-          ),
-
-          ValueListenableBuilder(
-            valueListenable: selectedPageNotifier,
-            builder: (context, int selectedPage, child) {
-              return textbuttonWidget(() {
-                selectedPageNotifier.value = 1;
-
-                Navigator.of(context).popUntil((route) => route.isFirst);
-              }, "Go to Programs >");
-            },
-          ),
-          // Image Video buttons
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

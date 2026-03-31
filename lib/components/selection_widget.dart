@@ -6,12 +6,16 @@ class SelectionWidget extends StatelessWidget {
   final String workout;
   final int weight;
   final String type;
+  final VoidCallback arrowUp;
+  final VoidCallback arrowDown;
 
   const SelectionWidget({
     super.key,
     required this.workout,
     required this.weight,
     required this.type,
+    required this.arrowUp,
+    required this.arrowDown,
   });
 
   @override
@@ -54,13 +58,16 @@ class SelectionWidget extends StatelessWidget {
                   Positioned(
                     top: -10, // pull up slightly
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: arrowUp, // First function
                       child: Icon(Icons.arrow_drop_up, size: 40),
                     ),
                   ),
                   Positioned(
                     bottom: -10, // pull down slightly
-                    child: Icon(Icons.arrow_drop_down, size: 40),
+                    child: GestureDetector(
+                      onTap: arrowDown,
+                      child: Icon(Icons.arrow_drop_down, size: 40),
+                    ),
                   ),
                 ],
               ),

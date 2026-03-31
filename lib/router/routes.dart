@@ -37,21 +37,21 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case '/exercise_details':
       return MaterialPageRoute(
         settings: settings,
-        builder: (_) => const ExerciseDetails(),
+        builder: (context) => const ExerciseDetails(),
       );
 
     //* Program Selection page
     case '/select_program':
       return MaterialPageRoute(
         settings: settings,
-        builder: (_) => const ProgramSelectionPage(),
+        builder: (context) => const ProgramSelectionPage(),
       );
 
     //* Programs page
     case '/programs_page':
       return MaterialPageRoute(
         settings: settings,
-        builder: (_) => const ProgramsPage(),
+        builder: (context) => const ProgramsPage(),
       );
     default:
       return MaterialPageRoute(

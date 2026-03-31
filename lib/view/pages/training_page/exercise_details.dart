@@ -172,7 +172,11 @@ class _ExerciseDetailsState extends State<ExerciseDetails> {
                 Navigator.pushNamed(
                   context,
                   '/select_program',
-                  arguments: {"image": image, "category": category},
+                  arguments: {
+                    "image": image,
+                    "category": category,
+                    "title": title,
+                  },
                 );
               },
             ),

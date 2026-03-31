@@ -28,4 +28,10 @@ class KTextStyle {
     fontSize: 16,
     color: Color(0xFF6B7280),
   );
+
+  static const TextStyle solidBold = TextStyle(
+    color: Color(0xFF111928),
+    fontWeight: FontWeight.bold,
+    fontSize: 16,
+  );
 }
