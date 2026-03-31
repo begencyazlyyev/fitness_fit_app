@@ -8,6 +8,7 @@ import 'package:flutter_application_1/components/textbutton_widget.dart';
 import 'package:flutter_application_1/cubit/kg_counter_cubit.dart';
 import 'package:flutter_application_1/cubit/programs_cubit.dart';
 import 'package:flutter_application_1/cubit/reps_counter_cubit.dart';
+import 'package:flutter_application_1/cubit/sets_counter_cubit.dart';
 import 'package:flutter_application_1/data/notifiers.dart';
 import 'package:flutter_application_1/models/programs_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,6 +39,7 @@ class ProgramSelectionPage extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => KgCounterCubit()),
         BlocProvider(create: (_) => RepsConterCubit()),
+        BlocProvider(create: (_) => SetsCounterCubit()),
       ],
       child: Scaffold(
         appBar: AppBar(
@@ -62,6 +64,7 @@ class ProgramSelectionPage extends StatelessWidget {
                 builder: (context) {
                   final counterKg = context.watch<KgCounterCubit>().state;
                   final counterReps = context.watch<RepsConterCubit>().state;
+                  final counterSets = context.watch<SetsCounterCubit>().state;
                   return Column(
                     children: [
                       //* Workout type
@@ -107,10 +110,14 @@ class ProgramSelectionPage extends StatelessWidget {
                       // Quantity of sets
                       SelectionWidget(
                         workout: "For each exercise",
-                        weight: 4,
+                        weight: counterSets,
                         type: "Sets",
-                        arrowUp: () {},
-                        arrowDown: () {},
+                        arrowUp: () {
+                          context.read<SetsCounterCubit>().increment();
+                        },
+                        arrowDown: () {
+                          context.read<SetsCounterCubit>().decrement();
+                        },
                       ),
                       Gap(10),
 
@@ -125,7 +132,7 @@ class ProgramSelectionPage extends StatelessWidget {
                                 image: image,
                                 kg: counterKg,
                                 reps: counterReps,
-                                sets: 4,
+                                sets: counterSets,
                               );
 
                               final today =

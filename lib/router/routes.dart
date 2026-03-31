@@ -3,7 +3,7 @@ import 'package:flutter_application_1/view/home_page.dart';
 import 'package:flutter_application_1/view/pages/programs_page/programs_page.dart';
 import 'package:flutter_application_1/view/pages/training_page/add_exercise_page.dart';
 import 'package:flutter_application_1/view/pages/training_page/exercise_details.dart';
-import 'package:flutter_application_1/view/pages/training_page/selectprogram_page.dart';
+import 'package:flutter_application_1/view/pages/training_page/programselection_page.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
