@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class TextFieldWidget extends StatelessWidget {
+class PhoneFieldWidget extends StatelessWidget {
   final String labelText;
-  final IconData? icons;
+  final String hintText;
   final TextEditingController controller;
 
-  const TextFieldWidget({
+  const PhoneFieldWidget({
     super.key,
     required this.labelText,
-    this.icons,
+    required this.hintText,
     required this.controller,
   });
 
@@ -21,22 +22,35 @@ class TextFieldWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           color: Colors.grey.shade50,
         ),
-
         height: 48,
         child: TextField(
           controller: controller,
+          keyboardType: TextInputType.phone,
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           decoration: InputDecoration(
-            floatingLabelStyle: TextStyle(color: Colors.black),
-            prefixIcon: icons != null ? Icon(icons) : null,
-            prefixIconColor: Colors.grey,
+            floatingLabelStyle: const TextStyle(color: Colors.black),
             labelText: labelText,
-            labelStyle: TextStyle(color: Colors.grey),
+            labelStyle: const TextStyle(color: Colors.grey),
+            hintText: hintText,
+            hintStyle: const TextStyle(color: Colors.grey),
+            prefixIcon: const Icon(Icons.phone_outlined, color: Colors.grey),
+            prefix: const Text(
+              "+993 ",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(width: 1.2, color: Colors.grey.shade400),
               borderRadius: BorderRadius.circular(8),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 1.2, color: Color(0xFF36454F)),
+              borderSide: const BorderSide(
+                width: 1.2,
+                color: Color(0xFF36454F),
+              ),
               borderRadius: BorderRadius.circular(8),
             ),
           ),

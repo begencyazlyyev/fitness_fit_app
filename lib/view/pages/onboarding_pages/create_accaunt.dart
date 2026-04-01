@@ -83,7 +83,12 @@ class CreateAccaunt extends StatelessWidget {
               ),
               Gap(8),
 
-              ButtonWidget(label: "Create Account", onPressed: () {}),
+              ButtonWidget(
+                label: "Create Account",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/user_details');
+                },
+              ),
               Row(
                 children: <Widget>[
                   Expanded(
