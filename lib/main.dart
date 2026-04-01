@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/cubit/bookmark_cubit.dart';
+import 'package:flutter_application_1/cubit/complited_exercise_cubit.dart';
 import 'package:flutter_application_1/cubit/kg_counter_cubit.dart';
 import 'package:flutter_application_1/cubit/programs_cubit.dart';
 import 'package:flutter_application_1/cubit/reps_counter_cubit.dart';
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => RepsConterCubit()),
         BlocProvider(create: (context) => ProgramsCubit()),
         BlocProvider(create: (context) => SetsCounterCubit()),
+        BlocProvider(
+          create: (context) => CompletedExerciseCubit(),
+        ), // ← add this
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -34,8 +38,8 @@ class MyApp extends StatelessWidget {
           primaryColor: Color(0xFF1C2A3A),
           colorScheme: const ColorScheme(
             brightness: Brightness.light,
-            primary: Color(0xFF1C2A3A), // main color
-            onPrimary: Colors.white, // text/icons on primary
+            primary: Color(0xFF1C2A3A),
+            onPrimary: Colors.white,
             secondary: Color(0xFF1C2A3A),
             onSecondary: Colors.white,
             error: Colors.red,
@@ -45,7 +49,6 @@ class MyApp extends StatelessWidget {
             surface: Colors.white,
             onSurface: Color(0xFF1C2A3A),
           ),
-
           filledButtonTheme: FilledButtonThemeData(
             style: FilledButton.styleFrom(backgroundColor: Color(0xFF1C2A3A)),
           ),

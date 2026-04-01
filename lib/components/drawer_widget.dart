@@ -249,7 +249,7 @@ Widget buildDrawer(BuildContext context) {
                   ),
                 ),
                 onTap: () {
-                  // Add logout logic here
+                  Navigator.pushNamed(context, '/create_account');
                 },
               ),
               Gap(200),

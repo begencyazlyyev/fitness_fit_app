@@ -5,6 +5,7 @@ import 'package:flutter_application_1/components/button_widget.dart';
 import 'package:flutter_application_1/components/mediabuttont_widget.dart';
 import 'package:flutter_application_1/components/text_style_widget.dart';
 import 'package:gap/gap.dart';
+import 'package:video_player/video_player.dart';
 
 class ExerciseDetails extends StatefulWidget {
   const ExerciseDetails({super.key});
@@ -14,7 +15,25 @@ class ExerciseDetails extends StatefulWidget {
 }
 
 class _ExerciseDetailsState extends State<ExerciseDetails> {
+  // Video player Contoller
   bool isVideo = false;
+  late VideoPlayerController _controller;
+  bool _isInitialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset('assets/videos/bench_press.mp4')
+      ..initialize().then((_) {
+        setState(() => _isInitialized = true);
+      });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +69,69 @@ class _ExerciseDetailsState extends State<ExerciseDetails> {
               width: double.infinity,
               height: 310,
               child: isVideo
-                  ? const Center(
-                      child: Text("Video Player Placeholder"),
-                    ) // Logic for video
+                  ? _isInitialized
+                        ? GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _controller.value.isPlaying
+                                    ? _controller.pause()
+                                    : _controller.play();
+                              });
+                            },
+                            child: SizedBox(
+                              width: double.infinity,
+                              height: 310,
+                              child: FittedBox(
+                                fit: BoxFit.cover,
+                                child: SizedBox(
+                                  width: _controller.value.size.width,
+                                  height: _controller.value.size.height,
+                                  // Video  play/pause button
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      VideoPlayer(_controller),
+                                      ValueListenableBuilder(
+                                        valueListenable: _controller,
+                                        builder:
+                                            (
+                                              context,
+                                              VideoPlayerValue value,
+                                              child,
+                                            ) {
+                                              return AnimatedOpacity(
+                                                opacity: value.isPlaying
+                                                    ? 0.0
+                                                    : 1.0,
+                                                duration: const Duration(
+                                                  milliseconds: 300,
+                                                ),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.black45,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  padding: const EdgeInsets.all(
+                                                    12,
+                                                  ),
+                                                  child: Icon(
+                                                    value.isPlaying
+                                                        ? Icons.pause
+                                                        : Icons.play_arrow,
+                                                    color: Colors.white,
+                                                    size: 60,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        : const Center(child: CircularProgressIndicator())
                   : Image.asset(image),
             ),
             const SizedBox(height: 10),
@@ -165,6 +244,7 @@ class _ExerciseDetailsState extends State<ExerciseDetails> {
                 ],
               ),
             ),
+            Gap(10),
 
             ButtonWidget(
               label: "Select Programs",
