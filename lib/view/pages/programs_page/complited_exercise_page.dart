@@ -158,11 +158,49 @@ class ComplitedExercisePage extends StatelessWidget {
                         )
                       : TextButton(
                           onPressed: () {
-                            context.read<ProgramsCubit>().removeExercise(
-                              dayIndex,
-                              exerciseIndex,
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext dialogContext) {
+                                return AlertDialog(
+                                  title: const Text("Delete Exercise"),
+                                  content: const Text(
+                                    "Are you sure you want to delete this exercise?",
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(
+                                          dialogContext,
+                                        ); // Close dialog (No)
+                                      },
+                                      child: const Text("No"),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(
+                                          dialogContext,
+                                        ); // Close dialog
+                                        context
+                                            .read<ProgramsCubit>()
+                                            .removeExercise(
+                                              dayIndex,
+                                              exerciseIndex,
+                                            );
+                                        Navigator.pop(
+                                          context,
+                                        ); // Close the bottom sheet/screen
+                                      },
+                                      child: Text(
+                                        "Yes",
+                                        style: TextStyle(
+                                          color: Color(0xFFEA4335),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
                             );
-                            Navigator.pop(context);
                           },
                           child: Text(
                             "Delete",

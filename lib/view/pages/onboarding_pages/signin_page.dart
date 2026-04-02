@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/button_widget.dart';
-import 'package:flutter_application_1/components/google_button.dart';
+import 'package:flutter_application_1/components/google_sign_widget.dart';
 import 'package:flutter_application_1/components/text_field_widget.dart';
 import 'package:flutter_application_1/components/text_style_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -47,7 +47,7 @@ class AccauntSignPage extends StatelessWidget {
               Gap(30),
               Center(
                 child: Text(
-                  "Create Accaunt",
+                  "Hi, Welcome Back!",
                   style: TextStyle(
                     fontSize: 24,
                     color: Color(0xFF111928),
@@ -58,18 +58,13 @@ class AccauntSignPage extends StatelessWidget {
               Gap(10),
               Center(
                 child: Text(
-                  "We are here to help you!",
+                  "Hope you are doing fine",
                   style: TextStyle(color: Colors.grey[600], fontSize: 16),
                 ),
               ),
               Gap(34),
+
               // Text Field starts here
-              TextFieldWidget(
-                labelText: "Your name",
-                icons: Icons.person_outline,
-                controller: usernameController,
-              ),
-              Gap(22),
               TextFieldWidget(
                 labelText: "Your Email",
                 icons: Icons.email_outlined,
@@ -84,9 +79,9 @@ class AccauntSignPage extends StatelessWidget {
               Gap(8),
 
               ButtonWidget(
-                label: "Hi, Welcome Back!",
+                label: "Sign In",
                 onPressed: () {
-                  Navigator.pushNamed(context, '/user_details'); //TODO Changes
+                  Navigator.pushNamed(context, '/');
                 },
               ),
               Row(
@@ -114,19 +109,31 @@ class AccauntSignPage extends StatelessWidget {
                 ],
               ),
 
-              GoogleButton(onPressed: () {}),
-
+              GoogleSignButton(onPressed: () {}),
+              Center(
+                child: TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Forgot password?",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Do you have an account?",
+                    "Don't you have an account yet?",
                     style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                   ),
                   TextButton(
                     onPressed: () {},
                     child: Text(
-                      "Sign In",
+                      "Sign Up",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,

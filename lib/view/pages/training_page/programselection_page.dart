@@ -126,6 +126,32 @@ class ProgramSelectionPage extends StatelessWidget {
                           ButtonWidget(
                             label: "Add to Programs",
                             onPressed: () {
+                              if (counterKg == 0 ||
+                                  counterReps == 0 ||
+                                  counterSets == 0) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      counterKg == 0
+                                          ? "Please set a weight (kg) before adding."
+                                          : counterReps == 0
+                                          ? "Please set the number of reps before adding."
+                                          : "Please set the number of sets before adding.",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    backgroundColor: const Color(0xFFEA4335),
+                                    behavior: SnackBarBehavior.floating,
+                                    duration: const Duration(seconds: 2),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                );
+                                return; // Stop execution, don't add exercise
+                              }
+
                               final exercise = ProgramExercise(
                                 title: title,
                                 category: category,
@@ -135,9 +161,7 @@ class ProgramSelectionPage extends StatelessWidget {
                                 sets: counterSets,
                               );
 
-                              final today =
-                                  DateTime.now().weekday -
-                                  1; // Monday=0, Sunday=6
+                              final today = DateTime.now().weekday - 1;
                               context.read<ProgramsCubit>().addExercise(
                                 today,
                                 exercise,

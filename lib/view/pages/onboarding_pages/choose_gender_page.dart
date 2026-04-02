@@ -110,7 +110,12 @@ class _ChooseGenderPageState extends State<ChooseGenderPage> {
             ],
           ),
           Gap(80),
-          ButtonWidget(label: "Continue", onPressed: () {}),
+          ButtonWidget(
+            label: "Continue",
+            onPressed: () {
+              Navigator.of(context).pushNamed('/signing_page');
+            },
+          ),
         ],
       ),
     );
