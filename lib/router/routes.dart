@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/view/home_page.dart';
+import 'package:flutter_application_1/view/pages/onboarding_pages/choose_gender_page.dart';
 import 'package:flutter_application_1/view/pages/onboarding_pages/create_accaunt.dart';
 import 'package:flutter_application_1/view/pages/onboarding_pages/user_details.dart';
 import 'package:flutter_application_1/view/pages/programs_page/complited_exercise_page.dart';
@@ -18,6 +19,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case '/user_details':
       return MaterialPageRoute(builder: (_) => const UserDetailsPage());
+    case '/choose_gender':
+      return MaterialPageRoute(builder: (_) => const ChooseGenderPage());
 
     case '/add_exercise':
       return PageRouteBuilder(

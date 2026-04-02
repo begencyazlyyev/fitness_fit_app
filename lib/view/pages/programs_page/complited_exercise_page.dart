@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/completed_widget.dart';
-import 'package:flutter_application_1/components/selection_widget.dart';
 import 'package:flutter_application_1/components/text_style_widget.dart';
 import 'package:flutter_application_1/cubit/complited_exercise_cubit.dart';
 import 'package:flutter_application_1/cubit/programs_cubit.dart';

@@ -97,7 +97,12 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
             ),
             Gap(30),
 
-            ButtonWidget(label: "Continue", onPressed: () {}),
+            ButtonWidget(
+              label: "Continue",
+              onPressed: () {
+                Navigator.of(context).pushNamed("/choose_gender");
+              },
+            ),
           ],
         ),
       ),

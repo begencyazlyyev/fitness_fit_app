@@ -111,8 +111,6 @@ class _HistoryPageState extends State<HistoryPage> {
                 itemCount: exercises.length,
                 itemBuilder: (context, index) {
                   final ex = exercises[index];
-
-                  // TODO changes here
                   return Stack(
                     children: [
                       Container(
