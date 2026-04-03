@@ -24,4 +24,16 @@ class ProgramsCubit extends Cubit<Map<int, List<ProgramExercise>>> {
     updated[dayIndex] = list;
     emit(updated);
   }
+
+  void updateExercise(
+    int dayIndex,
+    int exerciseIndex,
+    ProgramExercise updated,
+  ) {
+    final newState = Map<int, List<ProgramExercise>>.from(state);
+    final list = List<ProgramExercise>.from(newState[dayIndex] ?? []);
+    list[exerciseIndex] = updated;
+    newState[dayIndex] = list;
+    emit(newState);
+  }
 }

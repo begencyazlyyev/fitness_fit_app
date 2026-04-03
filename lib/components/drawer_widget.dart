@@ -1,7 +1,10 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_application_1/components/text_style_widget.dart';
+import 'package:flutter_application_1/cubit/user_cubit.dart';
 import 'package:flutter_application_1/data/notifiers.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -15,6 +18,9 @@ Widget buildDrawer(BuildContext context) {
       child: ValueListenableBuilder(
         valueListenable: selectedPageNotifier,
         builder: (context, int selectedPage, child) {
+          final userState = context.watch<UserCubit>().state;
+          final user = userState.users.isNotEmpty ? userState.users.last : null;
+
           return Column(
             children: [
               Expanded(
@@ -26,30 +32,37 @@ Widget buildDrawer(BuildContext context) {
                       padding: const EdgeInsets.symmetric(vertical: 30),
                       decoration: const BoxDecoration(color: Color(0xFFE9ECF3)),
                       child: Column(
-                        children: const [
+                        children: [
                           CircleAvatar(
                             radius: 46,
-                            backgroundImage: AssetImage(
-                              "assets/images/profile.jpg",
-                            ),
+                            backgroundImage: user?.imagePath != null
+                                ? FileImage(File(user!.imagePath!))
+                                : const AssetImage("assets/images/profile.jpg")
+                                      as ImageProvider,
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Text(
-                            "Sapar Meredow",
-                            style: TextStyle(
+                            user != null
+                                ? "${user.name} ${user.surname}"
+                                : "Guest",
+                            style: const TextStyle(
                               color: Color(0xFF1C2A3A),
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            "saparmaredow@gmail.com",
-                            style: TextStyle(color: Colors.grey, fontSize: 14),
+                            user?.email ?? "No email",
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                            ),
                           ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 10),
+
                     //* Training
                     Card(
                       color: selectedPage == 0
@@ -122,6 +135,7 @@ Widget buildDrawer(BuildContext context) {
                         },
                       ),
                     ),
+
                     //* History
                     ListTile(
                       leading: selectedPage == 2
@@ -203,6 +217,7 @@ Widget buildDrawer(BuildContext context) {
                         Navigator.pop(context);
                       },
                     ),
+
                     //* Settings
                     ListTile(
                       leading: selectedPage == 5
@@ -238,7 +253,6 @@ Widget buildDrawer(BuildContext context) {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Divider(thickness: 1, color: Colors.grey.shade400),
               ),
-
               ListTile(
                 leading: const Icon(Icons.logout, color: Color(0xFF9C2007)),
                 title: const Text(

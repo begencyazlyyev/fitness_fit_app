@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart'; // ← add this
 import 'package:flutter_application_1/components/button_widget.dart';
 import 'package:flutter_application_1/components/text_style_widget.dart';
+import 'package:flutter_application_1/cubit/user_cubit.dart';
 import 'package:gap/gap.dart';
 
 class ChooseGenderPage extends StatefulWidget {
@@ -113,6 +115,9 @@ class _ChooseGenderPageState extends State<ChooseGenderPage> {
           ButtonWidget(
             label: "Continue",
             onPressed: () {
+              context.read<UserCubit>().finalizeUser(
+                workoutGender: isMaleSelected ? 'male' : 'female',
+              );
               Navigator.of(context).pushNamed('/signing_page');
             },
           ),

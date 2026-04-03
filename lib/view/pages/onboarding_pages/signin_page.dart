@@ -6,12 +6,26 @@ import 'package:flutter_application_1/components/text_style_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
-class AccauntSignPage extends StatelessWidget {
+class AccauntSignPage extends StatefulWidget {
   const AccauntSignPage({super.key});
 
   @override
+  State<AccauntSignPage> createState() => _AccauntSignPageState();
+}
+
+class _AccauntSignPageState extends State<AccauntSignPage> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final TextEditingController usernameController = TextEditingController();
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -23,7 +37,6 @@ class AccauntSignPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              // Logo
               Center(
                 child: SizedBox(
                   width: 70,
@@ -63,21 +76,18 @@ class AccauntSignPage extends StatelessWidget {
                 ),
               ),
               Gap(34),
-
-              // Text Field starts here
               TextFieldWidget(
                 labelText: "Your Email",
                 icons: Icons.email_outlined,
-                controller: usernameController,
+                controller: emailController,
               ),
               Gap(22),
               TextFieldWidget(
                 labelText: "Password",
                 icons: Icons.lock_outline,
-                controller: usernameController,
+                controller: passwordController,
               ),
               Gap(8),
-
               ButtonWidget(
                 label: "Sign In",
                 onPressed: () {
@@ -108,7 +118,6 @@ class AccauntSignPage extends StatelessWidget {
                   ),
                 ],
               ),
-
               GoogleSignButton(onPressed: () {}),
               Center(
                 child: TextButton(
@@ -131,7 +140,9 @@ class AccauntSignPage extends StatelessWidget {
                     style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed("/create_account");
+                    },
                     child: Text(
                       "Sign Up",
                       style: TextStyle(

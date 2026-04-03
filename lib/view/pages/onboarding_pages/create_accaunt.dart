@@ -1,29 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart'; // ← add
 import 'package:flutter_application_1/components/button_widget.dart';
 import 'package:flutter_application_1/components/google_button.dart';
 import 'package:flutter_application_1/components/text_field_widget.dart';
 import 'package:flutter_application_1/components/text_style_widget.dart';
+import 'package:flutter_application_1/cubit/user_cubit.dart'; // ← add
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
-class CreateAccaunt extends StatelessWidget {
+class CreateAccaunt extends StatefulWidget {
+  // ← StatelessWidget → StatefulWidget
   const CreateAccaunt({super.key});
 
   @override
+  State<CreateAccaunt> createState() => _CreateAccauntState();
+}
+
+class _CreateAccauntState extends State<CreateAccaunt> {
+  final TextEditingController usernameController =
+      TextEditingController(); // ← separate controllers
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final TextEditingController usernameController = TextEditingController();
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
+          onTap: () => FocusScope.of(context).unfocus(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              // Logo
               Center(
                 child: SizedBox(
                   width: 70,
@@ -47,7 +64,7 @@ class CreateAccaunt extends StatelessWidget {
               Gap(30),
               Center(
                 child: Text(
-                  "Create Accaunt",
+                  "Create Account",
                   style: TextStyle(
                     fontSize: 24,
                     color: Color(0xFF111928),
@@ -63,29 +80,35 @@ class CreateAccaunt extends StatelessWidget {
                 ),
               ),
               Gap(34),
-              // Text Field starts here
               TextFieldWidget(
-                labelText: "Your name",
+                labelText: "Username",
                 icons: Icons.person_outline,
-                controller: usernameController,
+                controller: usernameController, // ← correct controller
               ),
               Gap(22),
               TextFieldWidget(
                 labelText: "Your Email",
                 icons: Icons.email_outlined,
-                controller: usernameController,
+                controller: emailController, // ← correct controller
               ),
               Gap(22),
               TextFieldWidget(
                 labelText: "Password",
                 icons: Icons.lock_outline,
-                controller: usernameController,
+                controller: passwordController, // ← correct controller
               ),
               Gap(8),
-
               ButtonWidget(
                 label: "Create Account",
                 onPressed: () {
+                  if (emailController.text.isEmpty ||
+                      passwordController.text.isEmpty) {
+                    return;
+                  }
+                  context.read<UserCubit>().setCredentials(
+                    email: emailController.text.trim(),
+                    password: passwordController.text,
+                  );
                   Navigator.pushNamed(context, '/user_details');
                 },
               ),
@@ -113,9 +136,7 @@ class CreateAccaunt extends StatelessWidget {
                   ),
                 ],
               ),
-
               GoogleButton(onPressed: () {}),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -124,7 +145,9 @@ class CreateAccaunt extends StatelessWidget {
                     style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signing_page');
+                    },
                     child: Text(
                       "Sign In",
                       style: TextStyle(

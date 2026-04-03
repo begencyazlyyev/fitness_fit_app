@@ -7,6 +7,7 @@ import 'package:flutter_application_1/cubit/kg_counter_cubit.dart';
 import 'package:flutter_application_1/cubit/programs_cubit.dart';
 import 'package:flutter_application_1/cubit/reps_counter_cubit.dart';
 import 'package:flutter_application_1/cubit/sets_counter_cubit.dart';
+import 'package:flutter_application_1/cubit/user_cubit.dart';
 import 'package:flutter_application_1/router/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,9 +27,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => RepsConterCubit()),
         BlocProvider(create: (context) => ProgramsCubit()),
         BlocProvider(create: (context) => SetsCounterCubit()),
-        BlocProvider(
-          create: (context) => CompletedExerciseCubit(),
-        ), // ← add this
+        BlocProvider(create: (context) => CompletedExerciseCubit()),
+        BlocProvider(create: (context) => UserCubit()), //
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

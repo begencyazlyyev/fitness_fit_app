@@ -1,12 +1,14 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart'; // ← add this
 import 'package:flutter_application_1/components/birthday_widget.dart';
 import 'package:flutter_application_1/components/button_widget.dart';
 import 'package:flutter_application_1/components/gender_widget.dart';
 import 'package:flutter_application_1/components/phone_field_widget.dart';
 import 'package:flutter_application_1/components/text_field_widget.dart';
-import 'package:gap/gap.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/text_style_widget.dart';
+import 'package:flutter_application_1/cubit/user_cubit.dart';
+import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserDetailsPage extends StatefulWidget {
@@ -77,7 +79,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
             TextFieldWidget(
               labelText: "Surname",
               icons: null,
-              controller: name,
+              controller: surname,
             ),
             Gap(30),
             GenderDropdownWidget(
@@ -100,6 +102,14 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
             ButtonWidget(
               label: "Continue",
               onPressed: () {
+                context.read<UserCubit>().setDetails(
+                  name: name.text.trim(),
+                  surname: surname.text.trim(),
+                  dateOfBirth: selectedDate?.toIso8601String() ?? '',
+                  gender: selectedGender,
+                  phone: phone.text.trim(),
+                  imagePath: selectedImage?.path,
+                );
                 Navigator.of(context).pushNamed("/choose_gender");
               },
             ),

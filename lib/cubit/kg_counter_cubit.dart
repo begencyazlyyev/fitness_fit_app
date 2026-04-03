@@ -12,4 +12,6 @@ class KgCounterCubit extends Cubit<int> {
       emit(state - 1);
     }
   }
+
+  void setValue(int value) => emit(value);
 }
