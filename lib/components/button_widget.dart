@@ -3,12 +3,29 @@ import 'package:flutter/material.dart';
 class ButtonWidget extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
-  const ButtonWidget({super.key, required this.label, required this.onPressed});
+  final double paddingTop;
+  final double paddingBottom;
+  final double paddingLeft;
+  final double paddingRight;
+  const ButtonWidget({
+    super.key,
+    required this.label,
+    required this.onPressed,
+    this.paddingTop = 20.0,
+    this.paddingLeft = 20.0,
+    this.paddingRight = 20.0,
+    this.paddingBottom = 20.0,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.only(
+        top: paddingTop,
+        left: paddingLeft,
+        right: paddingRight,
+        bottom: paddingBottom,
+      ),
       child: FilledButton(
         style: FilledButton.styleFrom(
           minimumSize: Size(double.infinity, 48),

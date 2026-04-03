@@ -103,6 +103,22 @@ class _CreateAccauntState extends State<CreateAccaunt> {
                 onPressed: () {
                   if (emailController.text.isEmpty ||
                       passwordController.text.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          emailController.text.isEmpty
+                              ? "Please enter your email address."
+                              : "Please enter a password.",
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        backgroundColor: const Color(0xFFE74C3C),
+                        behavior: SnackBarBehavior.floating,
+                        duration: const Duration(seconds: 2),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    );
                     return;
                   }
                   context.read<UserCubit>().setCredentials(

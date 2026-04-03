@@ -124,6 +124,8 @@ class ProgramSelectionPage extends StatelessWidget {
                       Stack(
                         children: [
                           ButtonWidget(
+                            paddingLeft: 0,
+                            paddingRight: 0,
                             label: "Add to Programs",
                             onPressed: () {
                               if (counterKg == 0 ||
@@ -170,7 +172,7 @@ class ProgramSelectionPage extends StatelessWidget {
                           ),
                           Positioned(
                             top: 30,
-                            right: 70,
+                            right: 60,
                             child: CircleAvatar(
                               radius: 14,
                               backgroundColor: Colors.white,

@@ -20,14 +20,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
   final List<String> _languages = ['English', 'Russian', 'Turkmen'];
 
-  void _openSubScreen(BuildContext context, String title, String content) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => _SubScreen(title: title, content: content),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final userState = context.watch<UserCubit>().state;
@@ -37,7 +29,7 @@ class _SettingsPageState extends State<SettingsPage> {
       child: Column(
         children: [
           Container(
-            margin: EdgeInsets.only(top: 30, left: 20, right: 20),
+            margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: Colors.white,
@@ -46,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   blurRadius: 2,
                   color: Colors.grey.shade300,
                   spreadRadius: 2,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
@@ -154,7 +146,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: ListTile(
-                    onTap: () => _openSubScreen(
+                    onTap: () => _openBottomSheet(
                       context,
                       "Privacy Policy",
                       _privacyPolicyText,
@@ -185,7 +177,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     vertical: 8,
                   ),
                   child: ListTile(
-                    onTap: () => _openSubScreen(
+                    onTap: () => _openBottomSheet(
                       context,
                       "Terms and Conditions",
                       _termsText,
@@ -265,30 +257,60 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 }
 
-// ── Sub Screen ───────────────────────────────────────────────
-class _SubScreen extends StatelessWidget {
-  final String title;
-  final String content;
-
-  const _SubScreen({required this.title, required this.content});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title, style: const TextStyle(fontSize: 17))),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Text(
-          content,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.black87,
-            height: 1.7,
+// ── Bottom Sheet ───────────────────────────────────────────────
+void _openBottomSheet(BuildContext context, String title, String content) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (_) => DraggableScrollableSheet(
+      expand: false,
+      initialChildSize: 0.75,
+      maxChildSize: 0.95,
+      minChildSize: 0.4,
+      builder: (_, scrollController) => Column(
+        children: [
+          // Handle bar
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 12),
+            width: 40,
+            height: 4,
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(2),
+            ),
           ),
-        ),
+          // Title
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              title,
+              style: KTextStyle.fitStyle.copyWith(fontSize: 18),
+            ),
+          ),
+          const Gap(8),
+          const Divider(color: Color(0xFFE5E7EB)),
+          // Scrollable content
+          Expanded(
+            child: SingleChildScrollView(
+              controller: scrollController,
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 30),
+              child: Text(
+                content,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.black87,
+                  height: 1.7,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
 }
 
 // ── Text Templates ───────────────────────────────────────────

@@ -66,7 +66,7 @@ Widget buildDrawer(BuildContext context) {
                     //* Training
                     Card(
                       color: selectedPage == 0
-                          ? Color(0xFFEDEDED)
+                          ? const Color(0xFFEDEDED)
                           : Colors.white,
                       elevation: selectedPage == 0 ? 2 : 0,
                       shape: RoundedRectangleBorder(
@@ -83,6 +83,7 @@ Widget buildDrawer(BuildContext context) {
                                 "assets/svg/outlined-dumbell.svg",
                                 width: 21,
                                 height: 21,
+                                color: Colors.grey,
                               ),
                         title: Text(
                           "Training",
@@ -137,112 +138,148 @@ Widget buildDrawer(BuildContext context) {
                     ),
 
                     //* History
-                    ListTile(
-                      leading: selectedPage == 2
-                          ? SvgPicture.asset(
-                              "assets/svg/calendar-filled.svg",
-                              width: 29,
-                              height: 29,
-                            )
-                          : SvgPicture.asset(
-                              "assets/svg/calendar-outlined.svg",
-                              width: 29,
-                              height: 29,
-                              color: Colors.grey,
-                            ),
-                      title: Text(
-                        "History",
-                        style: KTextStyle.drawerText.copyWith(
-                          color: selectedPage == 2
-                              ? const Color(0xFF4B5563)
-                              : Colors.grey,
-                        ),
+                    Card(
+                      color: selectedPage == 2
+                          ? const Color(0xFFEDEDED)
+                          : Colors.white,
+                      elevation: selectedPage == 2 ? 2 : 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                      onTap: () {
-                        selectedPageNotifier.value = 2;
-                        Navigator.pop(context);
-                      },
+                      child: ListTile(
+                        leading: selectedPage == 2
+                            ? SvgPicture.asset(
+                                "assets/svg/calendar-filled.svg",
+                                width: 29,
+                                height: 29,
+                              )
+                            : SvgPicture.asset(
+                                "assets/svg/calendar-outlined.svg",
+                                width: 29,
+                                height: 29,
+                                color: Colors.grey,
+                              ),
+                        title: Text(
+                          "History",
+                          style: KTextStyle.drawerText.copyWith(
+                            color: selectedPage == 2
+                                ? const Color(0xFF4B5563)
+                                : Colors.grey,
+                          ),
+                        ),
+                        onTap: () {
+                          selectedPageNotifier.value = 2;
+                          Navigator.pop(context);
+                        },
+                      ),
                     ),
 
                     //* Profile
-                    ListTile(
-                      leading: selectedPage == 3
-                          ? const Icon(
-                              Icons.person,
-                              size: 32,
-                              color: Color(0xFF4B5563),
-                            )
-                          : const Icon(
-                              Icons.person_outline,
-                              size: 32,
-                              color: Colors.grey,
-                            ),
-                      title: Text(
-                        "Profile",
-                        style: KTextStyle.drawerText.copyWith(
-                          color: selectedPage == 3
-                              ? const Color(0xFF4B5563)
-                              : Colors.grey,
-                        ),
+                    Card(
+                      color: selectedPage == 3
+                          ? const Color(0xFFEDEDED)
+                          : Colors.white,
+                      elevation: selectedPage == 3 ? 2 : 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                      onTap: () {
-                        selectedPageNotifier.value = 3;
-                        Navigator.pop(context);
-                      },
+                      child: ListTile(
+                        leading: selectedPage == 3
+                            ? const Icon(
+                                Icons.person,
+                                size: 32,
+                                color: Color(0xFF4B5563),
+                              )
+                            : const Icon(
+                                Icons.person_outline,
+                                size: 32,
+                                color: Colors.grey,
+                              ),
+                        title: Text(
+                          "Profile",
+                          style: KTextStyle.drawerText.copyWith(
+                            color: selectedPage == 3
+                                ? const Color(0xFF4B5563)
+                                : Colors.grey,
+                          ),
+                        ),
+                        onTap: () {
+                          selectedPageNotifier.value = 3;
+                          Navigator.pop(context);
+                        },
+                      ),
                     ),
 
                     //* Bookmark
-                    ListTile(
-                      leading: selectedPage == 4
-                          ? const Icon(
-                              Icons.bookmark,
-                              size: 32,
-                              color: Color(0xFF4B5563),
-                            )
-                          : const Icon(
-                              Icons.bookmark_outline,
-                              size: 32,
-                              color: Colors.grey,
-                            ),
-                      title: Text(
-                        "Bookmarks",
-                        style: KTextStyle.drawerText.copyWith(
-                          color: selectedPage == 4
-                              ? const Color(0xFF4B5563)
-                              : Colors.grey,
-                        ),
+                    Card(
+                      color: selectedPage == 4
+                          ? const Color(0xFFEDEDED)
+                          : Colors.white,
+                      elevation: selectedPage == 4 ? 2 : 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                      onTap: () {
-                        selectedPageNotifier.value = 4;
-                        Navigator.pop(context);
-                      },
+                      child: ListTile(
+                        leading: selectedPage == 4
+                            ? const Icon(
+                                Icons.bookmark,
+                                size: 32,
+                                color: Color(0xFF4B5563),
+                              )
+                            : const Icon(
+                                Icons.bookmark_outline,
+                                size: 32,
+                                color: Colors.grey,
+                              ),
+                        title: Text(
+                          "Bookmarks",
+                          style: KTextStyle.drawerText.copyWith(
+                            color: selectedPage == 4
+                                ? const Color(0xFF4B5563)
+                                : Colors.grey,
+                          ),
+                        ),
+                        onTap: () {
+                          selectedPageNotifier.value = 4;
+                          Navigator.pop(context);
+                        },
+                      ),
                     ),
 
                     //* Settings
-                    ListTile(
-                      leading: selectedPage == 5
-                          ? const Icon(
-                              Icons.settings,
-                              size: 32,
-                              color: Color(0xFF4B5563),
-                            )
-                          : const Icon(
-                              Icons.settings_outlined,
-                              size: 32,
-                              color: Colors.grey,
-                            ),
-                      title: Text(
-                        "Settings",
-                        style: KTextStyle.drawerText.copyWith(
-                          color: selectedPage == 5
-                              ? const Color(0xFF4B5563)
-                              : Colors.grey,
-                        ),
+                    Card(
+                      color: selectedPage == 5
+                          ? const Color(0xFFEDEDED)
+                          : Colors.white,
+                      elevation: selectedPage == 5 ? 2 : 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                      onTap: () {
-                        selectedPageNotifier.value = 5;
-                        Navigator.pop(context);
-                      },
+                      child: ListTile(
+                        leading: selectedPage == 5
+                            ? const Icon(
+                                Icons.settings,
+                                size: 32,
+                                color: Color(0xFF4B5563),
+                              )
+                            : const Icon(
+                                Icons.settings_outlined,
+                                size: 32,
+                                color: Colors.grey,
+                              ),
+                        title: Text(
+                          "Settings",
+                          style: KTextStyle.drawerText.copyWith(
+                            color: selectedPage == 5
+                                ? const Color(0xFF4B5563)
+                                : Colors.grey,
+                          ),
+                        ),
+                        onTap: () {
+                          selectedPageNotifier.value = 5;
+                          Navigator.pop(context);
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -266,7 +303,7 @@ Widget buildDrawer(BuildContext context) {
                   Navigator.pushNamed(context, '/create_account');
                 },
               ),
-              Gap(200),
+              Gap(150),
             ],
           );
         },
