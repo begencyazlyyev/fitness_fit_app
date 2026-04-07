@@ -158,12 +158,13 @@ class _AddExercisePageState extends State<AddExercisePage> {
                   category: categories[selectedIndex],
                   image: exerciseImages[index % exerciseImages.length],
                 );
-                //* Outer main container
+
                 return BlocBuilder<BookmarkCubit, BookmarkState>(
                   builder: (context, state) {
                     final isBookmarked = state.bookmarkedExercises.contains(
                       currentExercise,
                     );
+
                     return InkWell(
                       onTap: () {
                         Navigator.pushNamed(
@@ -173,7 +174,7 @@ class _AddExercisePageState extends State<AddExercisePage> {
                             "title": currentExercise.title,
                             "subtitle": currentExercise.category,
                             "image": currentExercise.image,
-                          }, //! Argumets passed here
+                          },
                         );
                       },
                       child: Container(
@@ -193,53 +194,50 @@ class _AddExercisePageState extends State<AddExercisePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             //* inside image container
-                            Stack(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10),
-                                      topRight: Radius.circular(10),
+                            SizedBox(
+                              width: double.infinity,
+                              child: Stack(
+                                children: [
+                                  AspectRatio(
+                                    aspectRatio:
+                                        195 /
+                                        184, // keeps your original proportions
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10),
+                                        topRight: Radius.circular(10),
+                                      ),
+                                      child: Image.asset(
+                                        exerciseImages[index %
+                                            exerciseImages.length],
+                                        width: double.infinity,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
-                                  width: 195,
-                                  height: 184,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10),
-                                      topRight: Radius.circular(10),
-                                    ),
-                                    child: Image.asset(
-                                      exerciseImages[index %
-                                          exerciseImages.length],
-                                      width: 195,
-                                      height: 184,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                // The Bookmark Icon
-                                Positioned(
-                                  top: 8,
-                                  left: 8,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      context
-                                          .read<BookmarkCubit>()
-                                          .toggleBookmark(currentExercise);
-                                    },
-                                    child: Icon(
-                                      isBookmarked
-                                          ? Icons.bookmark
-                                          : Icons.bookmark_outline,
-                                      size: 28,
-                                      color: isBookmarked
-                                          ? Colors.black
-                                          : Colors.black54,
+                                  // The Bookmark Icon
+                                  Positioned(
+                                    top: 8,
+                                    left: 8,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        context
+                                            .read<BookmarkCubit>()
+                                            .toggleBookmark(currentExercise);
+                                      },
+                                      child: Icon(
+                                        isBookmarked
+                                            ? Icons.bookmark
+                                            : Icons.bookmark_outline,
+                                        size: 28,
+                                        color: isBookmarked
+                                            ? Colors.black
+                                            : Colors.black54,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
 
                             //* second content text
