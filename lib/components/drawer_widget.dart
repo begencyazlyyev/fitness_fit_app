@@ -2,11 +2,11 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/side_svg_widget.dart';
+import 'package:flutter_application_1/components/side_icon_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_application_1/components/text_style_widget.dart';
 import 'package:flutter_application_1/cubit/user_cubit.dart';
 import 'package:flutter_application_1/data/notifiers.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 
 //* Drawer
@@ -62,240 +62,107 @@ Widget buildDrawer(BuildContext context) {
                       ),
                     ),
                     const SizedBox(height: 10),
-
                     //* Training
-                    Card(
-                      color: selectedPage == 0
-                          ? const Color(0xFFEDEDED)
-                          : Colors.white,
-                      elevation: selectedPage == 0 ? 2 : 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: ListTile(
-                        leading: selectedPage == 0
-                            ? SvgPicture.asset(
-                                "assets/svg/filled-dumbell.svg",
-                                width: 21,
-                                height: 21,
-                              )
-                            : SvgPicture.asset(
-                                "assets/svg/outlined-dumbell.svg",
-                                width: 21,
-                                height: 21,
-                                color: Colors.grey,
-                              ),
-                        title: Text(
-                          "Training",
-                          style: KTextStyle.drawerText.copyWith(
-                            color: selectedPage == 0
-                                ? const Color(0xFF4B5563)
-                                : Colors.grey,
-                          ),
-                        ),
-                        onTap: () {
-                          selectedPageNotifier.value = 0;
-                          Navigator.pop(context);
-                        },
-                      ),
+                    SideWidget(
+                      index: 0,
+                      imageActive: "assets/svg/filled-dumbell.svg",
+                      imageInactive: "assets/svg/outlined-dumbell.svg",
+                      title: "Training",
+                      onTap: () {
+                        selectedPageNotifier.value = 0;
+                        Navigator.pop(context);
+                      },
                     ),
 
                     //* Programs
-                    Card(
-                      color: selectedPage == 1
-                          ? Color(0xFFEDEDED)
-                          : Colors.white,
-                      elevation: selectedPage == 1 ? 2 : 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: ListTile(
-                        leading: selectedPage == 1
-                            ? SvgPicture.asset(
-                                "assets/svg/programs-filled.svg",
-                                width: 29,
-                                height: 29,
-                              )
-                            : SvgPicture.asset(
-                                "assets/svg/programs-outlined.svg",
-                                width: 29,
-                                height: 29,
-                                color: Colors.grey,
-                              ),
-                        title: Text(
-                          "Programs",
-                          style: KTextStyle.drawerText.copyWith(
-                            color: selectedPage == 1
-                                ? const Color(0xFF4B5563)
-                                : Colors.grey,
-                          ),
-                        ),
-                        onTap: () {
-                          selectedPageNotifier.value = 1;
-                          Navigator.pop(context);
-                        },
-                      ),
+                    SideWidget(
+                      index: 1,
+                      imageActive: "assets/svg/programs-filled.svg",
+                      imageInactive: "assets/svg/programs-outlined.svg",
+                      title: "Programs",
+                      onTap: () {
+                        selectedPageNotifier.value = 1;
+                        Navigator.pop(context);
+                      },
                     ),
 
                     //* History
-                    Card(
-                      color: selectedPage == 2
-                          ? const Color(0xFFEDEDED)
-                          : Colors.white,
-                      elevation: selectedPage == 2 ? 2 : 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: ListTile(
-                        leading: selectedPage == 2
-                            ? SvgPicture.asset(
-                                "assets/svg/calendar-filled.svg",
-                                width: 29,
-                                height: 29,
-                              )
-                            : SvgPicture.asset(
-                                "assets/svg/calendar-outlined.svg",
-                                width: 29,
-                                height: 29,
-                                color: Colors.grey,
-                              ),
-                        title: Text(
-                          "History",
-                          style: KTextStyle.drawerText.copyWith(
-                            color: selectedPage == 2
-                                ? const Color(0xFF4B5563)
-                                : Colors.grey,
-                          ),
-                        ),
-                        onTap: () {
-                          selectedPageNotifier.value = 2;
-                          Navigator.pop(context);
-                        },
-                      ),
+                    SideWidget(
+                      index: 2,
+                      imageActive: "assets/svg/calendar-filled.svg",
+                      imageInactive: "assets/svg/calendar-outlined.svg",
+                      title: "History",
+                      onTap: () {
+                        selectedPageNotifier.value = 2;
+                        Navigator.pop(context);
+                      },
                     ),
 
                     //* Profile
-                    Card(
-                      color: selectedPage == 3
-                          ? const Color(0xFFEDEDED)
-                          : Colors.white,
-                      elevation: selectedPage == 3 ? 2 : 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: ListTile(
-                        leading: selectedPage == 3
-                            ? const Icon(
-                                Icons.person,
-                                size: 32,
-                                color: Color(0xFF4B5563),
-                              )
-                            : const Icon(
-                                Icons.person_outline,
-                                size: 32,
-                                color: Colors.grey,
-                              ),
-                        title: Text(
-                          "Profile",
-                          style: KTextStyle.drawerText.copyWith(
-                            color: selectedPage == 3
-                                ? const Color(0xFF4B5563)
-                                : Colors.grey,
-                          ),
-                        ),
-                        onTap: () {
-                          selectedPageNotifier.value = 3;
-                          Navigator.pop(context);
-                        },
-                      ),
+                    SideIconWidget(
+                      index: 3,
+                      activeIcon: Icons.person,
+                      inactiveIcon: Icons.person_outline,
+                      title: "Profile",
+                      onTap: () {
+                        selectedPageNotifier.value = 3;
+                        Navigator.pop(context);
+                      },
                     ),
 
                     //* Bookmark
-                    Card(
-                      color: selectedPage == 4
-                          ? const Color(0xFFEDEDED)
-                          : Colors.white,
-                      elevation: selectedPage == 4 ? 2 : 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: ListTile(
-                        leading: selectedPage == 4
-                            ? const Icon(
-                                Icons.bookmark,
-                                size: 32,
-                                color: Color(0xFF4B5563),
-                              )
-                            : const Icon(
-                                Icons.bookmark_outline,
-                                size: 32,
-                                color: Colors.grey,
-                              ),
-                        title: Text(
-                          "Bookmarks",
-                          style: KTextStyle.drawerText.copyWith(
-                            color: selectedPage == 4
-                                ? const Color(0xFF4B5563)
-                                : Colors.grey,
-                          ),
-                        ),
-                        onTap: () {
-                          selectedPageNotifier.value = 4;
-                          Navigator.pop(context);
-                        },
-                      ),
+                    SideIconWidget(
+                      index: 4,
+                      activeIcon: Icons.bookmark,
+                      inactiveIcon: Icons.bookmark_outline,
+                      title: "Bookmark",
+                      onTap: () {
+                        selectedPageNotifier.value = 4;
+                        Navigator.pop(context);
+                      },
                     ),
-
                     //* Settings
-                    Card(
-                      color: selectedPage == 5
-                          ? const Color(0xFFEDEDED)
-                          : Colors.white,
-                      elevation: selectedPage == 5 ? 2 : 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: ListTile(
-                        leading: selectedPage == 5
-                            ? const Icon(
-                                Icons.settings,
-                                size: 32,
-                                color: Color(0xFF4B5563),
-                              )
-                            : const Icon(
-                                Icons.settings_outlined,
-                                size: 32,
-                                color: Colors.grey,
-                              ),
-                        title: Text(
-                          "Settings",
-                          style: KTextStyle.drawerText.copyWith(
-                            color: selectedPage == 5
-                                ? const Color(0xFF4B5563)
-                                : Colors.grey,
-                          ),
-                        ),
-                        onTap: () {
-                          selectedPageNotifier.value = 5;
-                          Navigator.pop(context);
-                        },
-                      ),
+                    SideIconWidget(
+                      index: 5,
+                      activeIcon: Icons.settings,
+                      inactiveIcon: Icons.settings_outlined,
+                      title: "Settings",
+                      onTap: () {
+                        selectedPageNotifier.value = 5;
+                        Navigator.pop(context);
+                      },
                     ),
                   ],
                 ),
               ),
-
-              // 🔹 Bottom Section
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Divider(thickness: 1, color: Colors.grey.shade400),
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(width: 100, height: 1, color: Colors.grey),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Transform.rotate(
+                        angle: 45 * (3.14159 / 180),
+                        child: Container(
+                          width: 10,
+                          height: 10,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    Container(width: 100, height: 1, color: Colors.grey),
+                  ],
+                ),
               ),
+              // 🔹 Bottom Section
               ListTile(
-                leading: const Icon(Icons.logout, color: Color(0xFF9C2007)),
+                leading: const Icon(Icons.logout, color: Color(0xFF2C2C2E)),
                 title: const Text(
                   "Logout",
                   style: TextStyle(
-                    color: Color(0xFF9C2007),
+                    color: Color(0xFF2C2C2E),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -303,7 +170,7 @@ Widget buildDrawer(BuildContext context) {
                   Navigator.pushNamed(context, '/create_account');
                 },
               ),
-              Gap(150),
+              Gap(50),
             ],
           );
         },

@@ -158,7 +158,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     title: const Text(
                       "Privacy Policy",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -189,7 +189,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     title: const Text(
                       "Terms and Conditions",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

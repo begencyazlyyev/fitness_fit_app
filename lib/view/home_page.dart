@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage>
           child: Scaffold(
             key: _scaffoldKey,
             appBar: AppBar(
+              toolbarHeight: selectedPage == 0 ? 74 : 60,
               surfaceTintColor: Colors.transparent,
               titleSpacing: 1,
               title: Text(
@@ -59,7 +60,7 @@ class _HomePageState extends State<HomePage>
                 style: KTextStyle.titleStyle,
               ),
               leading: IconButton(
-                padding: EdgeInsets.zero,
+                // padding: EdgeInsets.only(top: 8),
                 icon: const Icon(Icons.menu, size: 30),
                 onPressed: () => _scaffoldKey.currentState?.openDrawer(),
               ),

@@ -123,7 +123,7 @@ class ProgramSelectionPage extends StatelessWidget {
                             context.read<SetsCounterCubit>().decrement();
                           },
                         ),
-                        Gap(10),
+                        Gap(25),
 
                         Stack(
                           children: [

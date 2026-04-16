@@ -16,7 +16,7 @@ class NavbarWidget extends StatelessWidget {
           return const SizedBox.shrink();
         }
         return Container(
-          height: 96,
+          height: 90,
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(

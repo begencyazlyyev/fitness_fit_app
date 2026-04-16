@@ -87,7 +87,7 @@ class _SelectionWidgetState extends State<SelectionWidget> {
                 alignment: Alignment.center,
                 children: [
                   Positioned(
-                    top: -10,
+                    top: -12,
                     child: GestureDetector(
                       onTap: widget.arrowUp,
                       onLongPressStart: (_) => _startContinuous(widget.arrowUp),
@@ -96,7 +96,7 @@ class _SelectionWidgetState extends State<SelectionWidget> {
                     ),
                   ),
                   Positioned(
-                    bottom: -10,
+                    bottom: -12,
                     child: GestureDetector(
                       onTap: widget.arrowDown,
                       onLongPressStart: (_) =>
